@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.tam.repository.model.Wand
 import com.example.tam.ui.theme.TAMTheme
 
 class DetailsActivity : ComponentActivity() {
@@ -62,14 +63,14 @@ fun Showcase(viewModel: DetailsViewModel) {
         else -> {
             uiState.data?.let {
                 val character = it[0]
-                DetailsView(character.name, character.house, character.actor, character.species, character.image)
+                DetailsView(character.name, character.house, character.actor, character.species, character.image, character.wand)
             }
         }
     }
 }
 
 @Composable
-fun DetailsView(name: String, house: String, actor: String, species: String, image: String) {
+fun DetailsView(name: String, house: String, actor: String, species: String, image: String, wand: Wand) {
     Column {
         Row(modifier = Modifier.fillMaxWidth().padding(20.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -89,16 +90,31 @@ fun DetailsView(name: String, house: String, actor: String, species: String, ima
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Text(text = name, Modifier.padding(bottom = 4.dp), fontSize = 20.sp, color = Color.DarkGray)
         }
-        Row(Modifier.fillMaxWidth().padding(12.dp)) {
-            Column(modifier = Modifier.padding(start = 6.dp, end = 6.dp)) {
-                Text(text = "House:", Modifier.padding(top = 2.dp), fontSize = 16.sp, color = Color.Gray)
-                Text(text = "Actor:", Modifier.padding(top = 2.dp), fontSize = 16.sp, color = Color.Gray)
-                Text(text = "Species:", Modifier.padding(top = 2.dp), fontSize = 16.sp, color = Color.Gray)
+        Row(Modifier.fillMaxWidth().padding(start = 20.dp, top = 12.dp)) {
+            Column {
+                Text(text = "House:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
+                Text(text = "Actor:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
+                Text(text = "Species:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
             }
-            Column(modifier = Modifier.padding(start = 6.dp, end = 6.dp)) {
-                Text(text = house, Modifier.padding(top = 2.dp), fontSize = 16.sp)
-                Text(text = actor, Modifier.padding(top = 2.dp),fontSize = 16.sp)
-                Text(text = species, Modifier.padding(top = 2.dp), fontSize = 16.sp)
+            Column {
+                Text(text = house, Modifier.padding(top = 8.dp), fontSize = 16.sp)
+                Text(text = actor, Modifier.padding(top = 8.dp),fontSize = 16.sp)
+                Text(text = species, Modifier.padding(top = 8.dp), fontSize = 16.sp)
+            }
+        }
+        Row(Modifier.fillMaxWidth()) {
+            Text(text = "Wand information", Modifier.padding(start = 20.dp, top = 20.dp, bottom = 6.dp), fontSize = 18.sp, color = Color.DarkGray)
+        }
+        Row(Modifier.fillMaxWidth().padding(start = 20.dp)) {
+            Column {
+                Text(text = "Wood:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
+                Text(text = "Core:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
+                Text(text = "Length:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
+            }
+            Column {
+                Text(text = wand.wood, Modifier.padding(top = 8.dp), fontSize = 16.sp)
+                Text(text = wand.core, Modifier.padding(top = 8.dp),fontSize = 16.sp)
+                Text(text = wand.length.toString(), Modifier.padding(top = 8.dp),fontSize = 16.sp)
             }
         }
     }
