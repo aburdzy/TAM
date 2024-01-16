@@ -6,5 +6,12 @@ data class Character (
     var house: String,
     var actor: String,
     var species: String,
-    var image: String
+    var image: String,
+    var wand: Wand
+)
+
+data class Wand (
+    var wood: String,
+    var core: String,
+    var length: Number,
 )
