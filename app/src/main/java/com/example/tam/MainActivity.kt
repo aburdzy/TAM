@@ -10,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -114,7 +115,7 @@ fun TileView(id: String, name: String, house: String, actor: String, species: St
             )
             Column {
                 Text(text = name, Modifier.padding(top = 6.dp, start = 6.dp, bottom = 4.dp, end = 6.dp), fontSize = 16.sp, color = Color.DarkGray)
-                Row {
+                Row(Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(start = 6.dp, end = 6.dp)) {
                         Text(text = "House:", Modifier.padding(top = 2.dp), fontSize = 14.sp, color = Color.Gray)
                         Text(text = "Actor:", Modifier.padding(top = 2.dp), fontSize = 14.sp, color = Color.Gray)
