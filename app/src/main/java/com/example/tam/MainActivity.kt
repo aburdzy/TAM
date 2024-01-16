@@ -1,10 +1,12 @@
 package com.example.tam
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,37 +47,43 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Showcase(viewModel = viewModel)
+                    Showcase(viewModel = viewModel, onClick = { id -> navigateToDetailsActivity((id))})
                 }
             }
         }
     }
+
+    private fun navigateToDetailsActivity(id: String) {
+        val detailsIntent = Intent(this, DetailsActivity::class.java)
+        detailsIntent.putExtra("CUSTOM_ID", id)
+        startActivity((detailsIntent))
+    }
 }
 
 @Composable
-fun Showcase(viewModel: MainViewModel, modifier: Modifier = Modifier) {
+fun Showcase(viewModel: MainViewModel, onClick: (String) -> Unit) {
    val uiState by viewModel.immutableCharacterData.observeAsState(UiState())
 
     when {
-        uiState?.isLoading == true -> {
+        uiState.isLoading -> {
             LoadingView()
         }
-        uiState?.error != null -> {
+        uiState.error != null -> {
             ErrorView()
         }
         else -> {
             uiState.data?.let {
-                ListView(characters = it)
+                ListView(characters = it, onClick = { id -> onClick.invoke(id)})
             }
         }
     }
 }
 @Composable
-fun ListView(characters: List<Character>) {
+fun ListView(characters: List<Character>, onClick: (String) -> Unit) {
     LazyColumn {
         items(characters) { character ->
             Log.d("Main", "${character.name}, ${character.actor}")
-            TileView(name= character.name, house= character.house, actor = character.actor, species= character.species, image = character.image)
+            TileView(id = character.id, name= character.name, house= character.house, actor = character.actor, species= character.species, image = character.image, onClick = { id -> onClick.invoke(id) })
         }
     }
 }
@@ -91,9 +99,11 @@ fun LoadingView() {
 }
 
 @Composable
-fun TileView(name: String, house: String, actor: String, species: String, image: String) {
+fun TileView(id: String, name: String, house: String, actor: String, species: String, image: String, onClick: (String) -> Unit) {
     Box {
-        Column() {
+        Column(
+            modifier = Modifier.clickable { onClick.invoke(id)  }
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -103,9 +113,9 @@ fun TileView(name: String, house: String, actor: String, species: String, image:
                     placeholder = painterResource(id = R.drawable.harry),
                     modifier = Modifier.size(120.dp)
                 )
-                Column() {
+                Column {
                     Text(text = name, Modifier.padding(top = 6.dp, start = 6.dp, bottom = 4.dp, end = 6.dp), fontSize = 10.sp, color = Color.DarkGray)
-                    Row() {
+                    Row {
                         Column(modifier = Modifier.padding(start = 6.dp, end = 6.dp)) {
                             Text(text = "House:", Modifier.padding(top = 2.dp), fontSize = 8.sp, color = Color.Gray)
                             Text(text = "Actor:", Modifier.padding(top = 2.dp), fontSize = 8.sp, color = Color.Gray)

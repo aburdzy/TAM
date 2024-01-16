@@ -5,11 +5,15 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface HarryPotterService {
 
     @GET("/api/characters")
     suspend fun getHarryPotterResponse(): Response<List<Character>>
+
+    @GET("/api/character/{id}")
+    suspend fun getHarryPotterDetailsResponse(@Path("id") id: String): Response<List<Character>>
 
     companion object {
         private const val URL = "https://hp-api.onrender.com"

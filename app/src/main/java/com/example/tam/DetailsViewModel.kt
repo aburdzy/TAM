@@ -10,25 +10,24 @@ import com.example.tam.repository.model.CharacterRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel:  ViewModel() {
+class DetailsViewModel: ViewModel() {
     private val characterRepository = CharacterRepository()
 
     private val mutableCharacterData = MutableLiveData<UiState<List<Character>>>()
     val immutableCharacterData: LiveData<UiState<List<Character>>> = mutableCharacterData
 
-    fun getData() {
+    fun getData(id: String) {
         mutableCharacterData.postValue(UiState(isLoading = true))
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val request = characterRepository.getHarryPotterResponse()
+                val request = characterRepository.getHarryPotterDetailsResponse(id)
                 Log.e("MainViewModel", "request return code: ${request.code()}")
 
-                if(request.isSuccessful) {
+                if (request.isSuccessful) {
                     val characters = request.body()
-                    mutableCharacterData.postValue(UiState(data=characters!!))
-                }
-                else {
-                    mutableCharacterData.postValue(UiState(error="${request.code()}"))
+                    mutableCharacterData.postValue(UiState(data = characters!!))
+                } else {
+                    mutableCharacterData.postValue(UiState(error = "${request.code()}"))
                     Log.e("MainViewModel", "Request failed, ${request.errorBody()}")
                 }
             } catch (e: Exception) {
