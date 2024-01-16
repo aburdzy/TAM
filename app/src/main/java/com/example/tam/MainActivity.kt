@@ -7,7 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -95,40 +94,39 @@ fun ErrorView() {
 
 @Composable
 fun LoadingView() {
-    CircularProgressIndicator(modifier = Modifier.width(64.dp))
+    CircularProgressIndicator(modifier = Modifier.width(16.dp))
 }
 
 @Composable
 fun TileView(id: String, name: String, house: String, actor: String, species: String, image: String, onClick: (String) -> Unit) {
-    Box {
-        Column(
-            modifier = Modifier.clickable { onClick.invoke(id)  }
+    Column(
+        modifier = Modifier.clickable { onClick.invoke(id)  }
+    ) {
+        Row(
+            Modifier.padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                AsyncImage(
-                    model = image,
-                    contentDescription = name,
-                    placeholder = painterResource(id = R.drawable.harry),
-                    modifier = Modifier.size(120.dp)
-                )
-                Column {
-                    Text(text = name, Modifier.padding(top = 6.dp, start = 6.dp, bottom = 4.dp, end = 6.dp), fontSize = 10.sp, color = Color.DarkGray)
-                    Row {
-                        Column(modifier = Modifier.padding(start = 6.dp, end = 6.dp)) {
-                            Text(text = "House:", Modifier.padding(top = 2.dp), fontSize = 8.sp, color = Color.Gray)
-                            Text(text = "Actor:", Modifier.padding(top = 2.dp), fontSize = 8.sp, color = Color.Gray)
-                            Text(text = "Species:", Modifier.padding(top = 2.dp), fontSize = 8.sp, color = Color.Gray)
-                        }
-                        Column(modifier = Modifier.padding(start = 6.dp, end = 6.dp)) {
-                            Text(text = house, Modifier.padding(top = 2.dp), fontSize = 8.sp)
-                            Text(text = actor, Modifier.padding(top = 2.dp),fontSize = 8.sp)
-                            Text(text = species, Modifier.padding(top = 2.dp), fontSize = 8.sp)
-                        }
+            AsyncImage(
+                model = image,
+                contentDescription = name,
+                placeholder = painterResource(id = R.drawable.harry),
+                modifier = Modifier.size(140.dp)
+            )
+            Column {
+                Text(text = name, Modifier.padding(top = 6.dp, start = 6.dp, bottom = 4.dp, end = 6.dp), fontSize = 16.sp, color = Color.DarkGray)
+                Row {
+                    Column(modifier = Modifier.padding(start = 6.dp, end = 6.dp)) {
+                        Text(text = "House:", Modifier.padding(top = 2.dp), fontSize = 14.sp, color = Color.Gray)
+                        Text(text = "Actor:", Modifier.padding(top = 2.dp), fontSize = 14.sp, color = Color.Gray)
+                        Text(text = "Species:", Modifier.padding(top = 2.dp), fontSize = 14.sp, color = Color.Gray)
                     }
-
+                    Column(modifier = Modifier.padding(start = 6.dp, end = 6.dp)) {
+                        Text(text = house, Modifier.padding(top = 2.dp), fontSize = 14.sp)
+                        Text(text = actor, Modifier.padding(top = 2.dp),fontSize = 14.sp)
+                        Text(text = species, Modifier.padding(top = 2.dp), fontSize = 14.sp)
+                    }
                 }
+
             }
         }
     }
