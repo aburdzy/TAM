@@ -88,10 +88,13 @@ fun DetailsView(name: String, house: String, actor: String, species: String, ima
             }
         }
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(text = name, Modifier.padding(bottom = 4.dp), fontSize = 20.sp, color = Color.DarkGray)
+            Text(text = name, fontSize = 20.sp, color = Color.DarkGray)
         }
-        Row(Modifier.fillMaxWidth().padding(start = 20.dp, top = 12.dp)) {
-            Column {
+        Row(Modifier.fillMaxWidth()) {
+            Text(text = "General information", Modifier.padding(start = 24.dp, top = 24.dp, bottom = 6.dp), fontSize = 18.sp, color = Color.DarkGray)
+        }
+        Row(Modifier.fillMaxWidth().padding(start = 24.dp)) {
+            Column(Modifier.padding(end = 8.dp)) {
                 Text(text = "House:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
                 Text(text = "Actor:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
                 Text(text = "Species:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
@@ -103,10 +106,10 @@ fun DetailsView(name: String, house: String, actor: String, species: String, ima
             }
         }
         Row(Modifier.fillMaxWidth()) {
-            Text(text = "Wand information", Modifier.padding(start = 20.dp, top = 20.dp, bottom = 6.dp), fontSize = 18.sp, color = Color.DarkGray)
+            Text(text = "Wand information", Modifier.padding(start = 24.dp, top = 24.dp, bottom = 6.dp), fontSize = 18.sp, color = Color.DarkGray)
         }
-        Row(Modifier.fillMaxWidth().padding(start = 20.dp)) {
-            Column {
+        Row(Modifier.fillMaxWidth().padding(start = 24.dp)) {
+            Column(Modifier.padding(end = 8.dp)) {
                 Text(text = "Wood:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
                 Text(text = "Core:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
                 Text(text = "Length:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
