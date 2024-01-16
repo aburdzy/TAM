@@ -127,7 +127,6 @@ fun TileView(id: String, name: String, house: String, actor: String, species: St
                         Text(text = species, Modifier.padding(top = 2.dp), fontSize = 14.sp)
                     }
                 }
-
             }
         }
     }
