@@ -8,12 +8,12 @@ data class Character (
     var species: String,
     var image: String,
     var wand: Wand,
-    var dateOfBirth: String,
-    var ancestry: String
+    var ancestry: String,
+    var dateOfBirth: String? = null,
 )
 
 data class Wand (
     var wood: String,
     var core: String,
-    var length: Number,
+    var length: Number? = null,
 )

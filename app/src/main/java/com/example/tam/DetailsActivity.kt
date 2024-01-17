@@ -1,6 +1,7 @@
 package com.example.tam
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -55,6 +56,7 @@ fun Showcase(viewModel: DetailsViewModel) {
 
     when {
         uiState.isLoading -> {
+            Log.e("test", "test")
             LoadingView()
         }
         uiState.error != null -> {
@@ -63,14 +65,16 @@ fun Showcase(viewModel: DetailsViewModel) {
         else -> {
             uiState.data?.let {
                 val character = it[0]
-                DetailsView(character.name, character.house, character.actor, character.species, character.image, character.wand, character.dateOfBirth, character.ancestry)
+                DetailsView(character.name, character.house, character.actor, character.species, character.image, character.wand, character.ancestry, character.dateOfBirth)
             }
         }
     }
 }
 
 @Composable
-fun DetailsView(name: String, house: String, actor: String, species: String, image: String, wand: Wand, dateOfBirth: String, ancestry: String) {
+fun DetailsView(name: String, house: String, actor: String, species: String, image: String, wand: Wand, ancestry: String, dateOfBirth: String?) {
+    val birth = dateOfBirth ?: "-"
+
     Column {
         Row(modifier = Modifier.fillMaxWidth().padding(20.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -80,9 +84,9 @@ fun DetailsView(name: String, house: String, actor: String, species: String, ima
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AsyncImage(
-                    model = image,
+                    model = image.ifBlank { R.drawable.empty_image },
                     contentDescription = name,
-                    placeholder = painterResource(id = R.drawable.harry),
+                    placeholder = painterResource(id = R.drawable.empty_image),
                     modifier = Modifier.size(200.dp)
                 )
             }
@@ -102,11 +106,11 @@ fun DetailsView(name: String, house: String, actor: String, species: String, ima
                 Text(text = "Actor:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
             }
             Column {
-                Text(text = house, Modifier.padding(top = 8.dp), fontSize = 16.sp)
+                Text(text = house.ifBlank { "-" }, Modifier.padding(top = 8.dp), fontSize = 16.sp)
                 Text(text = species, Modifier.padding(top = 8.dp), fontSize = 16.sp)
-                Text(text = dateOfBirth, Modifier.padding(top = 8.dp),fontSize = 16.sp)
-                Text(text = ancestry, Modifier.padding(top = 8.dp), fontSize = 16.sp)
-                Text(text = actor, Modifier.padding(top = 8.dp),fontSize = 16.sp)
+                Text(text = birth, Modifier.padding(top = 8.dp),fontSize = 16.sp)
+                Text(text = ancestry.ifBlank { "-" }, Modifier.padding(top = 8.dp), fontSize = 16.sp)
+                Text(text = actor.ifBlank { "-" }, Modifier.padding(top = 8.dp),fontSize = 16.sp)
             }
         }
         Row(Modifier.fillMaxWidth()) {
@@ -119,9 +123,9 @@ fun DetailsView(name: String, house: String, actor: String, species: String, ima
                 Text(text = "Length:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
             }
             Column {
-                Text(text = wand.wood, Modifier.padding(top = 8.dp), fontSize = 16.sp)
-                Text(text = wand.core, Modifier.padding(top = 8.dp),fontSize = 16.sp)
-                Text(text = wand.length.toString(), Modifier.padding(top = 8.dp),fontSize = 16.sp)
+                Text(text = wand.wood.ifBlank { "-" }, Modifier.padding(top = 8.dp), fontSize = 16.sp)
+                Text(text = wand.core.ifBlank { "-" }, Modifier.padding(top = 8.dp),fontSize = 16.sp)
+                Text(text = wand.length?.toString() ?: "-", Modifier.padding(top = 8.dp),fontSize = 16.sp)
             }
         }
     }

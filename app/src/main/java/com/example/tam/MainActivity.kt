@@ -13,10 +13,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -89,16 +87,6 @@ fun ListView(characters: List<Character>, onClick: (String) -> Unit) {
 }
 
 @Composable
-fun ErrorView() {
-    Text(text = "Wystąpił błąd.")
-}
-
-@Composable
-fun LoadingView() {
-    CircularProgressIndicator(modifier = Modifier.width(16.dp))
-}
-
-@Composable
 fun TileView(id: String, name: String, house: String, actor: String, species: String, image: String, onClick: (String) -> Unit) {
     Column(
         modifier = Modifier.clickable { onClick.invoke(id)  }
@@ -108,9 +96,9 @@ fun TileView(id: String, name: String, house: String, actor: String, species: St
             verticalAlignment = Alignment.CenterVertically,
         ) {
             AsyncImage(
-                model = image,
+                model = image.ifBlank { R.drawable.empty_image },
                 contentDescription = name,
-                placeholder = painterResource(id = R.drawable.harry),
+                placeholder = painterResource(id = R.drawable.empty_image),
                 modifier = Modifier.size(140.dp)
             )
             Column {
@@ -122,9 +110,9 @@ fun TileView(id: String, name: String, house: String, actor: String, species: St
                         Text(text = "Species:", Modifier.padding(top = 2.dp), fontSize = 14.sp, color = Color.Gray)
                     }
                     Column(modifier = Modifier.padding(start = 6.dp, end = 6.dp)) {
-                        Text(text = house, Modifier.padding(top = 2.dp), fontSize = 14.sp)
-                        Text(text = actor, Modifier.padding(top = 2.dp),fontSize = 14.sp)
-                        Text(text = species, Modifier.padding(top = 2.dp), fontSize = 14.sp)
+                        Text(text = house.ifBlank { "-" }, Modifier.padding(top = 2.dp), fontSize = 14.sp)
+                        Text(text = actor.ifBlank { "-" }, Modifier.padding(top = 2.dp),fontSize = 14.sp)
+                        Text(text = species.ifBlank { "-" }, Modifier.padding(top = 2.dp), fontSize = 14.sp)
                     }
                 }
             }
