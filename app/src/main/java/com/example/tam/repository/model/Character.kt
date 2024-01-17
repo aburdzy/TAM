@@ -7,7 +7,9 @@ data class Character (
     var actor: String,
     var species: String,
     var image: String,
-    var wand: Wand
+    var wand: Wand,
+    var dateOfBirth: String,
+    var ancestry: String
 )
 
 data class Wand (

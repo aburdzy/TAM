@@ -63,14 +63,14 @@ fun Showcase(viewModel: DetailsViewModel) {
         else -> {
             uiState.data?.let {
                 val character = it[0]
-                DetailsView(character.name, character.house, character.actor, character.species, character.image, character.wand)
+                DetailsView(character.name, character.house, character.actor, character.species, character.image, character.wand, character.dateOfBirth, character.ancestry)
             }
         }
     }
 }
 
 @Composable
-fun DetailsView(name: String, house: String, actor: String, species: String, image: String, wand: Wand) {
+fun DetailsView(name: String, house: String, actor: String, species: String, image: String, wand: Wand, dateOfBirth: String, ancestry: String) {
     Column {
         Row(modifier = Modifier.fillMaxWidth().padding(20.dp),
             verticalAlignment = Alignment.CenterVertically
@@ -96,13 +96,17 @@ fun DetailsView(name: String, house: String, actor: String, species: String, ima
         Row(Modifier.fillMaxWidth().padding(start = 24.dp)) {
             Column(Modifier.padding(end = 8.dp)) {
                 Text(text = "House:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
-                Text(text = "Actor:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
                 Text(text = "Species:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
+                Text(text = "Birth:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
+                Text(text = "Ancestry:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
+                Text(text = "Actor:", Modifier.padding(top = 8.dp), fontSize = 16.sp, color = Color.Gray)
             }
             Column {
                 Text(text = house, Modifier.padding(top = 8.dp), fontSize = 16.sp)
-                Text(text = actor, Modifier.padding(top = 8.dp),fontSize = 16.sp)
                 Text(text = species, Modifier.padding(top = 8.dp), fontSize = 16.sp)
+                Text(text = dateOfBirth, Modifier.padding(top = 8.dp),fontSize = 16.sp)
+                Text(text = ancestry, Modifier.padding(top = 8.dp), fontSize = 16.sp)
+                Text(text = actor, Modifier.padding(top = 8.dp),fontSize = 16.sp)
             }
         }
         Row(Modifier.fillMaxWidth()) {
