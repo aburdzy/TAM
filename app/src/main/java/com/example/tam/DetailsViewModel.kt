@@ -21,17 +21,17 @@ class DetailsViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val request = characterRepository.getHarryPotterDetailsResponse(id)
-                Log.e("MainViewModel", "request return code: ${request.code()}")
+                Log.e("DetailsViewModel", "request return code: ${request.code()}")
 
                 if (request.isSuccessful) {
                     val characters = request.body()
                     mutableCharacterData.postValue(UiState(data = characters!!))
                 } else {
                     mutableCharacterData.postValue(UiState(error = "${request.code()}"))
-                    Log.e("MainViewModel", "Request failed, ${request.errorBody()}")
+                    Log.e("DetailsViewModel", "Request failed, ${request.errorBody()}")
                 }
             } catch (e: Exception) {
-                Log.e("MainViewModel", "Request failed", e)
+                Log.e("DetailsViewModel", "Request failed", e)
             }
         }
     }
