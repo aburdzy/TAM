@@ -51,7 +51,7 @@ class DetailsActivity : ComponentActivity() {
 
 @Composable
 fun Showcase(viewModel: DetailsViewModel) {
-    val uiState by viewModel.immutableCharacterData.observeAsState(UiState())
+    val uiState by viewModel.immutableCharacterDetails.observeAsState(UiState())
 
     when {
         uiState.isLoading -> {

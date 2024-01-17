@@ -13,21 +13,21 @@ import kotlinx.coroutines.launch
 class DetailsViewModel: ViewModel() {
     private val characterRepository = CharacterRepository()
 
-    private val mutableCharacterData = MutableLiveData<UiState<List<Character>>>()
-    val immutableCharacterData: LiveData<UiState<List<Character>>> = mutableCharacterData
+    private val mutableCharacterDetails = MutableLiveData<UiState<List<Character>>>()
+    val immutableCharacterDetails: LiveData<UiState<List<Character>>> = mutableCharacterDetails
 
     fun getData(id: String) {
-        mutableCharacterData.postValue(UiState(isLoading = true))
+        mutableCharacterDetails.postValue(UiState(isLoading = true))
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val request = characterRepository.getHarryPotterDetailsResponse(id)
                 Log.e("DetailsViewModel", "request return code: ${request.code()}")
 
                 if (request.isSuccessful) {
-                    val characters = request.body()
-                    mutableCharacterData.postValue(UiState(data = characters!!))
+                    val characterDetails = request.body()
+                    mutableCharacterDetails.postValue(UiState(data = characterDetails!!))
                 } else {
-                    mutableCharacterData.postValue(UiState(error = "${request.code()}"))
+                    mutableCharacterDetails.postValue(UiState(error = "${request.code()}"))
                     Log.e("DetailsViewModel", "Request failed, ${request.errorBody()}")
                 }
             } catch (e: Exception) {
